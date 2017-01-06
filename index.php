@@ -24,6 +24,26 @@
       <div class="tab-content">
         <div id="signup">   
           <h1>Hemen Üye Olabilirsiniz</h1>
+          <?php 
+        session_start();
+$hata="";
+if(isset($_POST["kaydol"])){ 
+echo "tıkladın";
+	$baglanti = new PDO("mysql:dbname=test;host=localhost","root","");
+	$sorgu = $baglanti->query("SELECT id FROM kullanici WHERE email='" . $_POST["email"] ."'",PDO::FETCH_ASSOC);
+	if($_POST["email"]=$sorgu){
+		echo "Daha Önceden Böyle Bi Kullanıcı Kayıt Yapmış";
+	}
+	else{
+		$komut = $baglanti->prepare("INSERT INTO uyeol (ad,soyad,email,sifre) VALUES (?,?,?,?)");
+		$komut->execute(array($_POST["ad"],$_POST["soyad"],$_POST["email"],$_POST["sifre"]));
+		echo "üye oldun";
+	}
+}
+
+
+          
+          ?>
   
           
           <form  method="POST">
@@ -94,6 +114,25 @@
         
       </div><!-- tab-content -->
        
+     <?php if(isset($_POST["giris"])){
+			$baglanti2 = new PDO("mysql:dbname=test;host=localhost","root","");
+	$baglanti1 = new PDO("mysql:dbname=test;host=localhost","root","");
+	$sorgu1 = $baglanti1->query("SELECT * FROM uyeol WHERE email='" . $_POST["email"] ."'",PDO::FETCH_ASSOC);
+	$sorgu2 = $baglanti2->query("SELECT * FROM uyeol WHERE sifre='" . $_POST["sifre"] ."'",PDO::FETCH_ASSOC);
+	$komut1 = $sorgu1->fetch(PDO::FETCH_ASSOC);
+	$komut2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
+	
+
+if($_POST["email"]=$komut1)
+{echo "email doğru" ;
+if($_POST["sifre"]=$komut2)
+{
+	/*include("sayfa1.php");*/
+	header("refresh:1;url=giris.php");
+	
+}
+
+}}?>
       
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
