@@ -31,7 +31,9 @@
           
       
            <div class="field-wrap">
-      <?php $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+      <?php
+	  
+	   $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
 	   
 	  $komut = $baglanti2->query("Select tc,ad,soyad,dTarihi from uyeler where  tc=(Select tc from giris  order by id desc LIMIT 1) ",PDO::FETCH_ASSOC);
 	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
@@ -187,12 +189,21 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
 		  echo '<td> <h4>'.$deneme["doktorAd"].'</h4></td>';
 		   echo '<td ><h4>'.$deneme["tarih"].'</h4></td>';
 		    echo '<td> <h4>'.$deneme["saat"].'</h4></td>';
+			   echo '<td> <h4>'."<button  type='submit' name='sil' value='".$deneme["id"]."'>İPTAL ET</button>".'</h4></td>';
 		  echo '</tr>';
 	  }
 	  
 	  
 	  
 	  echo "</table>";
+	  if(isset($_POST["sil"]))
+	  {
+	   $baglanti4 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+			 $komut = $baglanti4->query("delete from hastaneler where id=".$_POST["sil"]." ",PDO::FETCH_ASSOC);
+	  $sorgu = $komut->fetch(PDO::FETCH_ASSOC);
+		  execute($sorgu);
+		   
+	  }
 			
 			
 			
@@ -201,7 +212,8 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
           
           
           
-          <button class="button button-block" type="submit" name="rGor"/>Yenile</button>
+          <button class="button button-block" type="submit" name="rGor"  />Yenile</button>
+         
           </form>
                </div>
                <div id="login3">   
