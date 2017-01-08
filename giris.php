@@ -75,8 +75,8 @@
            <h2 style="color:#FFF;clear:both">Hastane: </h2> <select name="hAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
             <option>Hastane Seçiniz Lütfen..</option>
               <option>Eyup Devlet Hastanesi</option>
-              <option>Okmeydanı ve Araştırma Hastanesi</option>
-              <option>Taksim İlkYardım Hastanesi</option>
+              <option>Okmeydanı ve Arastirma Hastanesi</option>
+              <option>Taksim IlkYardım Hastanesi</option>
             </select>
           </div>
              <div class="field-wrap">
@@ -99,10 +99,10 @@
            <h2 style="color:#FFF;clear:both">Doktor: </h2> <select name="dAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
             <option>Doktor Seçiniz Lütfen..</option>
               <option>Yusuf Demir</option>
-              <option>Melih Süzer</option>
+              <option>Melih Suzer</option>
               <option>Can Akpınar</option>
-                <option>Ayse Yılmaz</option>
-                  <option>Tugba Laçin</option>
+                <option>Ayse Yilmaz</option>
+                  <option>Tugba Lacin</option>
             </select>
           </div>
              <div class="field-wrap">
@@ -159,27 +159,49 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
           </div>
           
               <div id="login2">   
-          <h1>Hoşgeldiniz</h1>
+          <h1>Randevularım</h1>
           
-          <form action="/" method="post">
+          <form  method="post">
           
             <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
+            <?php
+			
+			$baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	   
+	  $komut = $baglanti2->query("Select * from hastaneler where  tc=(Select tc from giris  order by id desc LIMIT 1) ",PDO::FETCH_ASSOC);
+	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
+
+  
+	
+	 
+	  echo "<table cellpadding='20px' >";
+	  echo '<tr style="color:white;">
+	  <td><h3>Tc No</h3></td><td><h3>Hastane Ad</h3></td><td><h3>Klinik Ad</h3></td><td><h3>Doktor Ad</h3></td><td><h3>Tarih</h3></td> <td><h3>Saat</h3></td>
+	  </tr>';
+	  foreach($sorgu1 as $deneme)
+	  {
+		  echo '<tr style="color:white;">';
+		    echo '<td ><h4>'.$deneme["tc"].'</h4></td>';
+		  echo '<td ><h4>'.$deneme["hastaneAd"].'</h4></td>';
+		  echo '<td ><h4>'.$deneme["klinikAd"].'</h4></td>';
+		  echo '<td> <h4>'.$deneme["doktorAd"].'</h4></td>';
+		   echo '<td ><h4>'.$deneme["tarih"].'</h4></td>';
+		    echo '<td> <h4>'.$deneme["saat"].'</h4></td>';
+		  echo '</tr>';
+	  }
+	  
+	  
+	  
+	  echo "</table>";
+			
+			
+			
+			 ?>
           </div>
           
-          <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
-          </div>
           
-          <p class="forgot"><a href="#">İşlemler 2</a></p>
           
-          <button class="button button-block"/>Giriş</button>
+          <button class="button button-block" type="submit" name="rGor"/>Yenile</button>
           </form>
                </div>
                <div id="login3">   
