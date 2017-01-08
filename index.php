@@ -149,14 +149,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
           <p class="forgot"><a href="#">Şifrenizimi Unuttunuz ?</a></p>
           
         <button type="submit" class="button button-block" name="giris" /> Giriş</button>
-          
-          </form>
-
-        </div>
-        
-      </div><!-- tab-content -->
-       
-     <?php
+               <?php
 	
 	  if(isset($_POST["giris"])){
 			$baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
@@ -181,7 +174,7 @@ if($_POST["sifre2"]=$komut2)
 $komut4->execute(array($uye));
 
 	
-	header("refresh:1;url=giris.php");
+	header("refresh:0;url=giris.php");
 }
 
 }
@@ -190,6 +183,13 @@ $komut4->execute(array($uye));
 }
 ob_end_flush();
 ?>
+          </form>
+
+        </div>
+        
+      </div><!-- tab-content -->
+       
+
       
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

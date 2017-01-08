@@ -16,78 +16,50 @@
   <div class="form2">
       
       <ul class="tab2-group">
-        <li class="tab active"><a href="#signup">Üyleri Listele</a></li>
-        <li class="tab"><a href="#login1">İşlemler</a></li>
-        <li class="tab"><a href="#login2">İşlemler1</a></li>
-        <li class="tab"><a href="#login3">İşlemler2</a></li>
+        <li class="tab active"><a href="#signup">Üye Bilgisi</a></li>
+        <li class="tab"><a href="#login1">Randevu Al</a></li>
+        <li class="tab"><a href="#login2">Randevuları Gör</a></li>
+        <li class="tab"><a href="#login3">Bilgilerini Güncelle</a></li>
       
       </ul>
       
       <div class="tab-content">
         <div id="signup">   
-          <h1>Hemen Üye Olabilirsiniz</h1>
+          <h1>Hoşgeldiniz</h1>
           
           <form action="/" method="post">
           
-          <div class="top-row">
-            <div class="field-wrap">
-              <label>
-                İsim<span class="req">*</span>
-              </label>
-              <input type="text" required autocomplete="off" />
-            </div>
-        
-            <div class="field-wrap">
-              <label>
-                Soyisim<span class="req">*</span>
-              </label>
-              <input type="text"required autocomplete="off"/>
-            </div>
-          </div>
-
-          <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
-          </div>
-          
-          <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
-          </div>
+      
            <div class="field-wrap">
       <?php $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
 	   
 	  $komut = $baglanti2->query("Select tc,ad,soyad,dTarihi from uyeler where  tc=(Select tc from giris  order by id desc LIMIT 1) ",PDO::FETCH_ASSOC);
 	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
-	  print_r($sorgu1);
 	 
-	  echo "<table >";
-	  echo '<tr>
-	  <td><h3>TC KİMLİK NUMARANIZ</h3></td><td><h3>ADINIZ</h3></td><td><h3>SOYADINIZ</h3></td><td><h3>DOĞUM TARİHİNİZ</h3></td>
-	  </tr>';
+	 
+	  echo "<table align='center' >";
+	 
 	  foreach($sorgu1 as $deneme)
 	  {
-		  echo '<tr>';
+		 
 		  
-		  echo '<td><h2>'.$deneme["tc"].'</h2></td>';
-		  echo '<td><h2>'.$deneme["ad"].'</h2></td>';
-		  echo '<td><h2>'.$deneme["soyad"].'</h2></td>';
-		   echo '<td><h2>'.$deneme["dTarihi"].'</h2></td>';
+	 echo '<tr style="color:white;">'; echo '<td><h2>TC Kimlik No '; 	echo '</h2></td>';  echo '<td><h2>'.$deneme["tc"].'</h2></td>';echo '</tr>';
+		  
+		  echo '<tr style="color:white;">'; echo '<td><h2>Adınız: '; echo '</h2></td>';  echo '<td><h2>'.$deneme["ad"].'</h2></td>'; echo '</tr>';
+		 echo '<tr style="color:white;">'; echo '<td><h2>Soy Adınız: '; echo '</h2></td>';   echo '<td><h2>'.$deneme["soyad"].'</h2></td>'; echo '</tr>';
+		 echo '<tr style="color:white;">'; echo '<td><h2>Doğum Tarihiniz: '; echo '</h2></td>';    echo '<td><h2>'.$deneme["dTarihi"].'</h2></td>'; echo '</tr>';
 		  echo '</tr>';
 	  }
 	  
 	  
 	  
 	  echo "</table>";
+	 
 	  
-	  ?>   deneme
+	  ?>   
           </div>
           
-          <button type="submit" class="button button-block"/>ÜYE OL</button>
+         <a href="index.php"> <button type="button" class="button button-block"  name="cikis"/>Çıkış</button></a>
           
           </form>
 
