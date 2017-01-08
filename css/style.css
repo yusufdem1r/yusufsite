@@ -106,6 +106,8 @@ label.active {
   left: 2px;
   font-size: 14px;
 }
+
+
 label.active .req {
   opacity: 0;
 }

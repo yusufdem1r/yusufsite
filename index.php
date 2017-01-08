@@ -25,20 +25,17 @@
         <div id="signup">   
           <h1>Hemen Üye Olabilirsiniz</h1>
           <?php 
-        session_start();
+       ob_start();
 $hata="";
 if(isset($_POST["kaydol"])){ 
 echo "tıkladın";
-	$baglanti = new PDO("mysql:dbname=test;host=localhost","root","");
-	$sorgu = $baglanti->query("SELECT id FROM kullanici WHERE email='" . $_POST["email"] ."'",PDO::FETCH_ASSOC);
-	if($_POST["email"]=$sorgu){
-		echo "Daha Önceden Böyle Bi Kullanıcı Kayıt Yapmış";
-	}
-	else{
-		$komut = $baglanti->prepare("INSERT INTO uyeol (ad,soyad,email,sifre) VALUES (?,?,?,?)");
-		$komut->execute(array($_POST["ad"],$_POST["soyad"],$_POST["email"],$_POST["sifre"]));
+	$baglanti3 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	$sorgu3 = $baglanti3->query("SELECT tc FROM uyeler WHERE tc='" . $_POST["tcno"] ."'",PDO::FETCH_ASSOC);
+	
+	$komut3 = $baglanti3->prepare("INSERT INTO uyeler (tc,ad,soyad,cinsiyet,dYeri,dTarihi,babaad,annead,eposta,sifre) VALUES (?,?,?,?,?,?,?,?,?,?)");
+$komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsiyet"],$_POST["dYeri"],$_POST["dTarih"],$_POST["bAd"],$_POST["aAd"],$_POST["email"],$_POST["sifre"]));
 		echo "üye oldun";
-	}
+	
 }
 
 
@@ -47,6 +44,12 @@ echo "tıkladın";
   
           
           <form  method="POST">
+           <div class="field-wrap">
+              <label>
+                Tc No<span class="req"></span>
+              </label>
+              <input type="text" required autocomplete="off" maxlength="11" name="tcno" />
+            </div>
           
           <div class="top-row">
             <div class="field-wrap">
@@ -63,22 +66,61 @@ echo "tıkladın";
               <input type="text"required autocomplete="off" name="soyad" />
             </div>
           </div>
-
+  <div class="top-row">
           <div class="field-wrap">
             <label>
-              Email Adresi<span class="req">*</span>
+              Cinsiyet<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off" name="email"/>
+            <input type="text"required autocomplete="off" name="cinsiyet"/>
           </div>
           
           <div class="field-wrap">
+            <label>
+              Doğum Yeriniz<span class="req">*</span>
+            </label>
+           <input type="text" required autocomplete="off" name="dYeri"/>
+          </div>
+    </div>
+      <div class="top-row">
+          <div class="field-wrap">
+            <label>
+              Doğum Tarihiniz<span class="req">*</span>
+            </label>
+            
+             <input type="date"required autocomplete="off" name="dTarih"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Anne Adınız:<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off" name="aAd"/>
+          </div>
+          
+             
+    </div>
+    <div class="top-row">
+          <div class="field-wrap">
+            <label>
+              Baba Adınız<span class="req">*</span>
+            </label>
+            
+             <input type="text"required autocomplete="off" name="bAd"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              E-mail<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" name="email"/>
+          </div>
+    </div>
+       <div class="field-wrap">
             <label>
               Şifre<span class="req">*</span>
             </label>
             <input type="password"required autocomplete="off" name="sifre"/>
           </div>
-    
-    
           <button type="submit" class="button button-block" name="kaydol"/>ÜYE OL</button>
           
           </form>
@@ -92,16 +134,16 @@ echo "tıkladın";
           
             <div class="field-wrap">
             <label>
-              Email Adresi<span class="req">*</span>
+              Tc Numaranız<span class="req">*</span>
             </label>
-            <input type="TEXT"required autocomplete="off" name="email"/>
+            <input type="TEXT" required autocomplete="off"  name="tcno2"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Şifre<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off" name="sifre"/>
+            <input type="password" required autocomplete="off" name="sifre2"/>
           </div>
           
           <p class="forgot"><a href="#">Şifrenizimi Unuttunuz ?</a></p>
@@ -114,25 +156,33 @@ echo "tıkladın";
         
       </div><!-- tab-content -->
        
-     <?php if(isset($_POST["giris"])){
-			$baglanti2 = new PDO("mysql:dbname=test;host=localhost","root","");
-	$baglanti1 = new PDO("mysql:dbname=test;host=localhost","root","");
-	$sorgu1 = $baglanti1->query("SELECT * FROM uyeol WHERE email='" . $_POST["email"] ."'",PDO::FETCH_ASSOC);
-	$sorgu2 = $baglanti2->query("SELECT * FROM uyeol WHERE sifre='" . $_POST["sifre"] ."'",PDO::FETCH_ASSOC);
+     <?php
+	
+	  if(isset($_POST["giris"])){
+			$baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+			$baglanti1 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+		
+				$sorgu1 = $baglanti1->query("SELECT tc FROM uyeler WHERE tc='" . $_POST["tcno2"] ."'",PDO::FETCH_ASSOC);
+	$sorgu2 = $baglanti2->query("SELECT sifre FROM uyeler WHERE sifre='" . $_POST["sifre2"] ."'",PDO::FETCH_ASSOC);
 	$komut1 = $sorgu1->fetch(PDO::FETCH_ASSOC);
 	$komut2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
 	
 
-if($_POST["email"]=$komut1)
-{echo "email doğru" ;
-if($_POST["sifre"]=$komut2)
+if($_POST["tcno2"]=$komut1)
+{
+	echo "doğru";
+	
+if($_POST["sifre2"]=$komut2)
 {
 	/*include("sayfa1.php");*/
-	header("refresh:1;url=giris.php");
-	
+	echo "şifre doğru";
+	header("refresh:0;url=giris.php");
 }
 
-}}?>
+}
+}
+ob_end_flush();
+?>
       
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
