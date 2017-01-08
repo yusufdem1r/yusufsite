@@ -59,32 +59,10 @@
             <input type="password"required autocomplete="off"/>
           </div>
            <div class="field-wrap">
-      <?php $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
-	   
-	  $komut = $baglanti2->query("Select tc,ad,soyad,dTarihi from uyeler where  tc=(Select tc from giris  order by id desc LIMIT 1) ",PDO::FETCH_ASSOC);
-	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
-	  print_r($sorgu1);
-	 
-	  echo "<table >";
-	  echo '<tr>
-	  <td><h3>TC KİMLİK NUMARANIZ</h3></td><td><h3>ADINIZ</h3></td><td><h3>SOYADINIZ</h3></td><td><h3>DOĞUM TARİHİNİZ</h3></td>
-	  </tr>';
-	  foreach($sorgu1 as $deneme)
-	  {
-		  echo '<tr>';
-		  
-		  echo '<td><h2>'.$deneme["tc"].'</h2></td>';
-		  echo '<td><h2>'.$deneme["ad"].'</h2></td>';
-		  echo '<td><h2>'.$deneme["soyad"].'</h2></td>';
-		   echo '<td><h2>'.$deneme["dTarihi"].'</h2></td>';
-		  echo '</tr>';
-	  }
-	  
-	  
-	  
-	  echo "</table>";
-	  
-	  ?>   deneme
+            <label>
+              ürün:<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off"/>
           </div>
           
           <button type="submit" class="button button-block"/>ÜYE OL</button>

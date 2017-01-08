@@ -136,7 +136,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
             <label>
               Tc Numaranız<span class="req">*</span>
             </label>
-            <input type="TEXT" required autocomplete="off"  name="tcno2"/>
+            <input type="text" required autocomplete="off"  name="tcno2"/>
           </div>
           
           <div class="field-wrap">
@@ -167,19 +167,26 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
 	$komut1 = $sorgu1->fetch(PDO::FETCH_ASSOC);
 	$komut2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
 	
-
+$uye= $_POST["tcno2"];
 if($_POST["tcno2"]=$komut1)
 {
-	echo "doğru";
+	echo "üye adın doğru";
 	
 if($_POST["sifre2"]=$komut2)
 {
 	/*include("sayfa1.php");*/
 	echo "şifre doğru";
-	header("refresh:0;url=giris.php");
+	$baglanti4 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	$komut4 = $baglanti4->prepare("INSERT INTO giris(tc) VALUES (?)");
+$komut4->execute(array($uye));
+
+	
+	header("refresh:1;url=giris.php");
 }
 
 }
+
+
 }
 ob_end_flush();
 ?>
