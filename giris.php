@@ -66,26 +66,94 @@
         </div>
         
         <div id="login1">   
-          <h1>Hoşgeldiniz</h1>
+          <h1>Randevu Alma</h1>
           
-          <form action="/" method="post">
-          
+          <form  method="post">
+          <div class="top-row">
             <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
-          </div>
           
-          <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
+           <h2 style="color:#FFF;clear:both">Hastane: </h2> <select name="hAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+            <option>Hastane Seçiniz Lütfen..</option>
+              <option>Eyup Devlet Hastanesi</option>
+              <option>Okmeydanı ve Araştırma Hastanesi</option>
+              <option>Taksim İlkYardım Hastanesi</option>
+            </select>
           </div>
+             <div class="field-wrap">
           
-          <p class="forgot"><a href="#">İşlemler 1</a></p>
-          <button class="button button-block"/>Giriş</button>
+           <h2 style="color:#FFF;clear:both">Klinik: </h2> <select name="kAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+           <option>Klinik Seçiniz Lütfen..</option>
+              <option>Ortopedi</option>
+              <option>Dahiliye</option>
+              <option>Cildiye</option>
+              <option>Genel Cerrahi</option>
+              <option>Enfeksiyon</option>
+               <option>Kulak-Burun ve Bogaz Hastalıkları</option>
+                  
+            </select>
+          </div>
+          </div>
+            <div class="top-row">
+            <div class="field-wrap">
+          
+           <h2 style="color:#FFF;clear:both">Doktor: </h2> <select name="dAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+            <option>Doktor Seçiniz Lütfen..</option>
+              <option>Yusuf Demir</option>
+              <option>Melih Süzer</option>
+              <option>Can Akpınar</option>
+                <option>Ayse Yılmaz</option>
+                  <option>Tugba Laçin</option>
+            </select>
+          </div>
+             <div class="field-wrap">
+          
+           <h2 style="color:#FFF;clear:both">Tarih: </h2> 
+           <input type="date" name="rTarih">
+          </div>
+          </div>
+           <div class="field-wrap">
+          
+           <h2 style="color:#FFF;clear:both">Saat: </h2> <select name="saat" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+           		 <option>Saat Seçiniz Lütfen..</option>
+              <option>08:00</option>
+              <option>09:00</option>
+              <option>10:00</option>
+              <option>11:00</option>
+              <option>12:00</option>
+              <option>13:00</option>
+              <option>14:00</option>
+              <option>15:00</option>
+              <option>16:00</option>
+              <option>17:00</option>
+              <option>18:00</option>
+              <option>19:00</option>
+              <option>20:00</option>
+             
+             
+                  
+            </select>
+          </div>
+         
+          
+          
+          <button class="button button-block" type="submit" name="rAl">Randevuyu Al</button>
+          
+          <?php
+		  
+		  
+		  if(isset($_POST["rAl"]))
+		  {
+			  
+			 $baglanti3 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+			 $komut = $baglanti3->query("(Select tc from uyeler where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
+	  $sorgutc = $komut->fetch(PDO::FETCH_ASSOC);
+			 $komut3 = $baglanti3->prepare("INSERT INTO hastaneler (tc,hastaneAd,klinikAd,doktorAd,tarih,saat) VALUES (?,?,?,?,?,?)");
+$komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],$_POST["rTarih"],$_POST["saat"]));
+		
+			  
+		  }
+		  
+		   ?>
           </form>
         
           </div>

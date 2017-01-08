@@ -46,7 +46,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
           <form  method="POST">
            <div class="field-wrap">
               <label>
-                Tc No<span class="req"></span>
+                Tc No<span class="req">:Lütfen Sadece Sayı Girin</span>
               </label>
               <input type="text" required autocomplete="off" maxlength="11" name="tcno" />
             </div>
@@ -136,7 +136,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
             <label>
               Tc Numaranız<span class="req">*</span>
             </label>
-            <input type="text" required autocomplete="off"  name="tcno2"/>
+            <input type="text" required autocomplete="off" maxlength="11"  name="tcno2"/>
           </div>
           
           <div class="field-wrap">
