@@ -84,11 +84,12 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
     </div>
       <div class="top-row">
           <div class="field-wrap">
-            <label>
-              Doğum Tarihiniz<span class="req">*</span>
-            </label>
+           
             
              <input type="date"required autocomplete="off" name="dTarih"/>
+              <label>
+              Doğum Tarihiniz
+            </label>
           </div>
           
           <div class="field-wrap">

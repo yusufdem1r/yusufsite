@@ -17,8 +17,8 @@
       
       <ul class="tab2-group">
         <li class="tab active"><a href="#signup">Üye Bilgisi</a></li>
-        <li class="tab"><a href="#login1">Randevu Al</a></li>
-        <li class="tab"><a href="#login2">Randevuları Gör</a></li>
+        <li class="tab"><a href="#login1">Üye Ekle</a></li>
+        <li class="tab"><a href="#login2">Alnımış Randevular</a></li>
         <li class="tab"><a href="#login3">Bilgilerini Güncelle</a></li>
       
       </ul>
@@ -40,7 +40,7 @@
 	 
 	 
 	  echo "<table 
-	  bordercolor='#333399' border='1px'  cellspacing='10px' cellpadding='2px' bordercolordark='#00CC33' >";
+	  bordercolor='#1CE8AA' border='1px'  cellspacing='10px' cellpadding='2px' bordercolordark='#00CC33' >";
 	 echo '<tr style="color:white;">
 	  <td><h4>Tc No</h4></td><td><h4>Adı</h4></td><td><h4>Soyadı</h4></td><td><h4>Cinsiyeti</h4></td><td><h4>Doğum Yeri</h4></td> <td><h4>Doğum Tarihi</h4></td><td><h4>Baba Ad</h4></td><td><h4>Anne Ad</h4></td><td> <h4>Email</h4></td><td> <h4>Şifre</h4></td>
 	  </tr>';
@@ -89,97 +89,126 @@
         </div>
         
         <div id="login1">   
-          <h1>Randevu Alma</h1>
+          <h1>Üye Ekle</h1>
           
-          <form  method="post">
-          <div class="top-row">
-            <div class="field-wrap">
+          <?php 
+       ob_start();
+$hata="";
+if(isset($_POST["kaydol"])){ 
+echo "tıkladın";
+	$baglanti3 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	$sorgu3 = $baglanti3->query("SELECT tc FROM uyeler WHERE tc='" . $_POST["tcno"] ."'",PDO::FETCH_ASSOC);
+	
+	$komut3 = $baglanti3->prepare("INSERT INTO uyeler (tc,ad,soyad,cinsiyet,dYeri,dTarihi,babaad,annead,eposta,sifre) VALUES (?,?,?,?,?,?,?,?,?,?)");
+$komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsiyet"],$_POST["dYeri"],$_POST["dTarih"],$_POST["bAd"],$_POST["aAd"],$_POST["email"],$_POST["sifre"]));
+		echo "üye oldun";
+	
+}
+
+
           
-           <h2 style="color:#FFF;clear:both">Hastane: </h2> <select name="hAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
-            <option>Hastane Seçiniz Lütfen..</option>
-              <option>Eyup Devlet Hastanesi</option>
-              <option>Okmeydanı ve Arastirma Hastanesi</option>
-              <option>Taksim IlkYardım Hastanesi</option>
-            </select>
-          </div>
-             <div class="field-wrap">
+          ?>
+  
           
-           <h2 style="color:#FFF;clear:both">Klinik: </h2> <select name="kAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
-           <option>Klinik Seçiniz Lütfen..</option>
-              <option>Ortopedi</option>
-              <option>Dahiliye</option>
-              <option>Cildiye</option>
-              <option>Genel Cerrahi</option>
-              <option>Enfeksiyon</option>
-               <option>Kulak-Burun ve Bogaz Hastalıkları</option>
-                  
-            </select>
-          </div>
-          </div>
-            <div class="top-row">
-            <div class="field-wrap">
-          
-           <h2 style="color:#FFF;clear:both">Doktor: </h2> <select name="dAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
-            <option>Doktor Seçiniz Lütfen..</option>
-              <option>Yusuf Demir</option>
-              <option>Melih Suzer</option>
-              <option>Can Akpınar</option>
-                <option>Ayse Yilmaz</option>
-                  <option>Tugba Lacin</option>
-            </select>
-          </div>
-             <div class="field-wrap">
-          
-           <h2 style="color:#FFF;clear:both">Tarih: </h2> 
-           <input type="date" name="rTarih">
-          </div>
-          </div>
+          <form  method="POST">
            <div class="field-wrap">
+             
+              <input type="text" required autocomplete="off" maxlength="11" name="tcno" />
+               <label>
+                Tc No
+              </label>
+            </div>
           
-           <h2 style="color:#FFF;clear:both">Saat: </h2> <select name="saat" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
-           		 <option>Saat Seçiniz Lütfen..</option>
-              <option>08:00</option>
-              <option>09:00</option>
-              <option>10:00</option>
-              <option>11:00</option>
-              <option>12:00</option>
-              <option>13:00</option>
-              <option>14:00</option>
-              <option>15:00</option>
-              <option>16:00</option>
-              <option>17:00</option>
-              <option>18:00</option>
-              <option>19:00</option>
-              <option>20:00</option>
+          <div class="top-row">
+           
+            <div class="field-wrap">
              
+              <input type="text" required autocomplete="off" name="ad" />
+              <label>
+                Ad
+              </label>
+            </div>
+            
+        
+            <div class="field-wrap">
              
-                  
-            </select>
+              <input type="text"required autocomplete="off" name="soyad" />
+               <label>
+                Soyad
+              </label>
+            </div>
+          </div>
+  <div class="top-row">
+          <div class="field-wrap">
+          
+            <input type="text"required autocomplete="off" name="cinsiyet"/>
+              <label>
+              Cinsiyet
+            </label>
+          </div>
+          
+          <div class="field-wrap">
+           
+           <input type="text" required autocomplete="off" name="dYeri"/>
+            <label>
+              Doğum Yeriniz
+            </label>
+          </div>
+    </div>
+      <div class="top-row">
+          <div class="field-wrap">
+            
+             <input type="date"required autocomplete="off" name="dTarih"/>
+             <label>
+              Doğum Tarihiniz
+            </label>
+            
+          </div>
+          
+          <div class="field-wrap">
+            
+            <input type="text"required autocomplete="off" name="aAd"/>
+            <label>
+              Anne Adı
+            </label>
+          </div>
+          
+             
+    </div>
+    <div class="top-row">
+          <div class="field-wrap">
+            
+            
+             <input type="text"required autocomplete="off" name="bAd"/>
+             <label>
+              Baba Adı
+            </label>
+          </div>
+          
+          <div class="field-wrap">
+           
+            <input type="email"required autocomplete="off" name="email"/>
+             <label>
+              E-mail
+            </label>
+          </div>
+    </div>
+       <div class="field-wrap">
+            
+            <input type="password"required autocomplete="off" name="sifre"/>
+            <label>
+              Şifre
+            </label>
+          </div>
+          <button type="submit" class="button button-block" name="kaydol"/>ÜYE OL</button>
+          
+          </form>
           </div>
          
           
           
-          <button class="button button-block" type="submit" name="rAl">Randevuyu Al</button>
-          
-          <?php
-		  
-		  
-		  if(isset($_POST["rAl"]))
-		  {
-			  
-			 $baglanti3 = new PDO("mysql:dbname=hastane;host=localhost","root","");
-			 $komut = $baglanti3->query("(Select tc from uyeler where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
-	  $sorgutc = $komut->fetch(PDO::FETCH_ASSOC);
-			 $komut3 = $baglanti3->prepare("INSERT INTO hastaneler (tc,hastaneAd,klinikAd,doktorAd,tarih,saat) VALUES (?,?,?,?,?,?)");
-$komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],$_POST["rTarih"],$_POST["saat"]));
-		
-			  
-		  }
-		  
-		   ?>
-          </form>
-        
-          </div>
+         
+      
           
               <div id="login2">   
           <h1>Randevularım</h1>
@@ -197,7 +226,7 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
   
 	
 	 
-	  echo "<table cellpadding='20px' >";
+	  echo "<table align='center'  bordercolor='#1CE8AA' border='1px'  cellspacing='10px' cellpadding='2px' bordercolordark='#00CC33' >";
 	  echo '<tr style="color:white;">
 	  <td><h3>Tc No</h3></td><td><h3>Hastane Ad</h3></td><td><h3>Klinik Ad</h3></td><td><h3>Doktor Ad</h3></td><td><h3>Tarih</h3></td> <td><h3>Saat</h3></td>
 	  </tr>';
