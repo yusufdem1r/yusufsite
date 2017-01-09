@@ -18,6 +18,7 @@
       <ul class="tab-group">
         <li class="tab active"><a href="#signup">Üye Ol</a></li>
         <li class="tab"><a href="#login">Giriş Yap</a></li>
+       
       
       </ul>
       
@@ -146,7 +147,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
             <input type="password" required autocomplete="off" name="sifre2"/>
           </div>
           
-          <p class="forgot"><a href="#">Şifrenizimi Unuttunuz ?</a></p>
+          <p class="forgot"> <a href="admin.php">Admin Girişi</a></p>
           
         <button type="submit" class="button button-block" name="giris" /> Giriş</button>
                <?php
