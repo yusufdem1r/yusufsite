@@ -1,6 +1,6 @@
 YUSUF DEMİR 156901020<hr>
 İNTERNET PROGRAMCILIĞI<hr>
-HASTANE RANDEVU SİSTEMİ OLUCAK,
+HASTANE RANDEVU SİSTEMİ OLUCAK,<br>
 NOT: Görsel Programlamada Yaptıgım proje ile aynı oldugu için veritabanları ortak ondan dolayı veritabanı dosyaları görsel programlama projesinin içinde vardır.<br>
 UYE OLMA ,UYE GİRİŞİ, ÜYENİN KENDİ BİLGİLERİNİ GÜNCELLEMESİ VE ALDIĞI RADEVULARI İPTAL ETMESİ,<br>
 ADMİN PANELİ ,ADMİNİN ÜYELERİ SİLEBİLME OLANAĞI VE RANDEVU İÇİN KLİNİK EKLEME,<br>
