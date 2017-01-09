@@ -16,133 +16,308 @@
   <div class="form2">
       
       <ul class="tab2-group">
-        <li class="tab active"><a href="#signup">Üyleri Listele</a></li>
-        <li class="tab"><a href="#login1">İşlemler</a></li>
-        <li class="tab"><a href="#login2">İşlemler1</a></li>
-        <li class="tab"><a href="#login3">İşlemler2</a></li>
+        <li class="tab active"><a href="#signup">Üye Bilgisi</a></li>
+        <li class="tab"><a href="#login1">Randevu Al</a></li>
+        <li class="tab"><a href="#login2">Randevuları Gör</a></li>
+        <li class="tab"><a href="#login3">Bilgilerini Güncelle</a></li>
       
       </ul>
       
       <div class="tab-content">
         <div id="signup">   
-          <h1>Hemen Üye Olabilirsiniz</h1>
+          <h1>Üyelerin Listesi</h1>
           
-          <form action="/" method="post">
+          <form  method="post">
           
-          <div class="top-row">
-            <div class="field-wrap">
-              <label>
-                İsim<span class="req">*</span>
-              </label>
-              <input type="text" required autocomplete="off" />
-            </div>
-        
-            <div class="field-wrap">
-              <label>
-                Soyisim<span class="req">*</span>
-              </label>
-              <input type="text"required autocomplete="off"/>
-            </div>
-          </div>
-
-          <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
-          </div>
-          
-          <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
-          </div>
+      
            <div class="field-wrap">
-            <label>
-              ürün:<span class="req">*</span>
-            </label>
-            <input type="text"required autocomplete="off"/>
+      <?php
+	  
+	   $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	   
+	  $komut = $baglanti2->query("Select *  from uyeler  ",PDO::FETCH_ASSOC);
+	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
+	 
+	 
+	  echo "<table 
+	  bordercolor='#333399' border='1px'  cellspacing='10px' cellpadding='2px' bordercolordark='#00CC33' >";
+	 echo '<tr style="color:white;">
+	  <td><h4>Tc No</h4></td><td><h4>Adı</h4></td><td><h4>Soyadı</h4></td><td><h4>Cinsiyeti</h4></td><td><h4>Doğum Yeri</h4></td> <td><h4>Doğum Tarihi</h4></td><td><h4>Baba Ad</h4></td><td><h4>Anne Ad</h4></td><td> <h4>Email</h4></td><td> <h4>Şifre</h4></td>
+	  </tr>';
+	  foreach($sorgu1 as $deneme)
+	  {
+		 
+		  
+	 echo '<tr style="color:white;">';
+	    echo '<td><h4>'.$deneme["tc"].'</h4></td>';
+		 echo '<td><h4>'.$deneme["ad"].'</h4></td>';
+		  echo '<td><h4>'.$deneme["soyad"].'</h4></td>';
+		  echo '<td><h4>'.$deneme["cinsiyet"].'</h4></td>';
+		    echo '<td><h4>'.$deneme["dYeri"].'</h4></td>';
+			 echo '<td><h4>'.$deneme["dTarihi"].'</h4></td>';
+			  echo '<td><h4>'.$deneme["babaad"].'</h4></td>';
+			   echo '<td><h4>'.$deneme["annead"].'</h4></td>';
+			    echo '<td><h4>'.$deneme["eposta"].'</h4></td>';
+				 echo '<td><h4>'.$deneme["sifre"].'</h4></td>';
+				 echo '<td> <h4>'."<button  type='submit' name='sil' value='".$deneme["tc"]."'>Üyeyi Sil</button>".'</h4></td>';
+		 
+	 
+		  echo '</tr>';
+	  }
+	  
+	  
+	  
+	  echo "</table>";
+	  
+	  if(isset($_POST["sil"]))
+	  {
+	   $baglanti4 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+			 $komut = $baglanti4->query("delete from uyeler where tc=".$_POST["sil"]." ",PDO::FETCH_ASSOC);
+	  $sorgu = $komut->fetch(PDO::FETCH_ASSOC);
+		  execute($sorgu);
+		   
+	  }
+	 
+	  
+	  ?>   
           </div>
           
-          <button type="submit" class="button button-block"/>ÜYE OL</button>
+         <a href="index.php"> <button type="button" class="button button-block"  name="cikis"/>Çıkış</button></a>
           
           </form>
 
         </div>
         
         <div id="login1">   
-          <h1>Hoşgeldiniz</h1>
+          <h1>Randevu Alma</h1>
           
-          <form action="/" method="post">
-          
+          <form  method="post">
+          <div class="top-row">
             <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
-          </div>
           
-          <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
+           <h2 style="color:#FFF;clear:both">Hastane: </h2> <select name="hAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+            <option>Hastane Seçiniz Lütfen..</option>
+              <option>Eyup Devlet Hastanesi</option>
+              <option>Okmeydanı ve Arastirma Hastanesi</option>
+              <option>Taksim IlkYardım Hastanesi</option>
+            </select>
           </div>
+             <div class="field-wrap">
           
-          <p class="forgot"><a href="#">İşlemler 1</a></p>
-          <button class="button button-block"/>Giriş</button>
+           <h2 style="color:#FFF;clear:both">Klinik: </h2> <select name="kAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+           <option>Klinik Seçiniz Lütfen..</option>
+              <option>Ortopedi</option>
+              <option>Dahiliye</option>
+              <option>Cildiye</option>
+              <option>Genel Cerrahi</option>
+              <option>Enfeksiyon</option>
+               <option>Kulak-Burun ve Bogaz Hastalıkları</option>
+                  
+            </select>
+          </div>
+          </div>
+            <div class="top-row">
+            <div class="field-wrap">
+          
+           <h2 style="color:#FFF;clear:both">Doktor: </h2> <select name="dAd" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+            <option>Doktor Seçiniz Lütfen..</option>
+              <option>Yusuf Demir</option>
+              <option>Melih Suzer</option>
+              <option>Can Akpınar</option>
+                <option>Ayse Yilmaz</option>
+                  <option>Tugba Lacin</option>
+            </select>
+          </div>
+             <div class="field-wrap">
+          
+           <h2 style="color:#FFF;clear:both">Tarih: </h2> 
+           <input type="date" name="rTarih">
+          </div>
+          </div>
+           <div class="field-wrap">
+          
+           <h2 style="color:#FFF;clear:both">Saat: </h2> <select name="saat" size="1" style="border:#069;font-size:24px;border-radius:5px;padding:5px;color:#336">
+           		 <option>Saat Seçiniz Lütfen..</option>
+              <option>08:00</option>
+              <option>09:00</option>
+              <option>10:00</option>
+              <option>11:00</option>
+              <option>12:00</option>
+              <option>13:00</option>
+              <option>14:00</option>
+              <option>15:00</option>
+              <option>16:00</option>
+              <option>17:00</option>
+              <option>18:00</option>
+              <option>19:00</option>
+              <option>20:00</option>
+             
+             
+                  
+            </select>
+          </div>
+         
+          
+          
+          <button class="button button-block" type="submit" name="rAl">Randevuyu Al</button>
+          
+          <?php
+		  
+		  
+		  if(isset($_POST["rAl"]))
+		  {
+			  
+			 $baglanti3 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+			 $komut = $baglanti3->query("(Select tc from uyeler where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
+	  $sorgutc = $komut->fetch(PDO::FETCH_ASSOC);
+			 $komut3 = $baglanti3->prepare("INSERT INTO hastaneler (tc,hastaneAd,klinikAd,doktorAd,tarih,saat) VALUES (?,?,?,?,?,?)");
+$komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],$_POST["rTarih"],$_POST["saat"]));
+		
+			  
+		  }
+		  
+		   ?>
           </form>
         
           </div>
           
               <div id="login2">   
-          <h1>Hoşgeldiniz</h1>
+          <h1>Randevularım</h1>
           
-          <form action="/" method="post">
+          <form  method="post">
           
             <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
+            <?php
+			
+			$baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	   
+	  $komut = $baglanti2->query("Select * from hastaneler ",PDO::FETCH_ASSOC);
+	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
+
+  
+	
+	 
+	  echo "<table cellpadding='20px' >";
+	  echo '<tr style="color:white;">
+	  <td><h3>Tc No</h3></td><td><h3>Hastane Ad</h3></td><td><h3>Klinik Ad</h3></td><td><h3>Doktor Ad</h3></td><td><h3>Tarih</h3></td> <td><h3>Saat</h3></td>
+	  </tr>';
+	  foreach($sorgu1 as $deneme)
+	  {
+		  echo '<tr style="color:white;">';
+		    echo '<td ><h4>'.$deneme["tc"].'</h4></td>';
+		  echo '<td ><h4>'.$deneme["hastaneAd"].'</h4></td>';
+		  echo '<td ><h4>'.$deneme["klinikAd"].'</h4></td>';
+		  echo '<td> <h4>'.$deneme["doktorAd"].'</h4></td>';
+		   echo '<td ><h4>'.$deneme["tarih"].'</h4></td>';
+		    echo '<td> <h4>'.$deneme["saat"].'</h4></td>';
+			   echo '<td> <h4>'."<button  type='submit' name='sil2' value='".$deneme["id"]."'>İPTAL ET</button>".'</h4></td>';
+		  echo '</tr>';
+	  }
+	  
+	  
+	  
+	  echo "</table>";
+	  if(isset($_POST["sil2"]))
+	  {
+	   $baglanti4 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+			 $komut = $baglanti4->query("delete from hastaneler where id=".$_POST["sil2"]." ",PDO::FETCH_ASSOC);
+	  $sorgu = $komut->fetch(PDO::FETCH_ASSOC);
+		  execute($sorgu);
+		   
+	  }
+			
+			
+			
+			 ?>
           </div>
           
-          <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
-          </div>
           
-          <p class="forgot"><a href="#">İşlemler 2</a></p>
           
-          <button class="button button-block"/>Giriş</button>
+          <button class="button button-block" type="submit" name="rGor"  />Yenile</button>
+         
           </form>
                </div>
                <div id="login3">   
-          <h1>Hoşgeldiniz</h1>
+          <h1>Üye Bilgilerini Güncelle</h1>
           
-          <form action="/" method="post">
+          <form method="post">
+          <?php $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	   
+	  $komut = $baglanti2->query("(Select * from uyeler  where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
+	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
+
+		  print_r($sorgu1);
+         echo ' <div class="field-wrap">
+              
+              <input type="text" required autocomplete="off" maxlength="11" value="'.$sorgu1['0']['tc'].'" name="tcno" />
+            </div>
           
+          <div class="top-row">
             <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
+              
+              <input type="text" required autocomplete="off" value="'.$sorgu1['0']['ad'].'" name="ad" />
+            </div>
+        
+            <div class="field-wrap">
+           
+              <input type="text"required autocomplete="off" value="'.$sorgu1['0']['soyad'].'" name="soyad" />
+            </div>
+          </div>
+  <div class="top-row">
+          <div class="field-wrap">
+          
+            <input type="text"required autocomplete="off" value="'.$sorgu1['0']['cinsiyet'].'" name="cinsiyet"/>
           </div>
           
           <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
+            
+           <input type="text" required autocomplete="off" value="'.$sorgu1['0']['dYeri'].'" name="dYeri"/>
+          </div>
+    </div>
+      <div class="top-row">
+          <div class="field-wrap">
+           
+            
+             <input type="date"required autocomplete="off" value="value="'.$sorgu1['0']['dTarihi'].'"" name="dTarih"/>
           </div>
           
-          <p class="forgot"><a href="#">İşlemler 3</a></p>
+          <div class="field-wrap">
+            
+            <input type="text"required autocomplete="off" value="'.$sorgu1['0']['annead'].'" name="aAd"/>
+          </div>
           
-          <button class="button button-block"/>Giriş</button>
+             
+    </div>
+    <div class="top-row">
+          <div class="field-wrap">
+          
+            
+             <input type="text"required autocomplete="off" value="'.$sorgu1['0']['babaad'].'" name="bAd"/>
+          </div>
+          
+          <div class="field-wrap">
+           
+            <input type="email"required autocomplete="off" value="'.$sorgu1['0']['eposta'].'" name="email"/>
+          </div>
+    </div>
+       <div class="field-wrap">
+            
+            <input type="text autocomplete="off" value="'.$sorgu1['0']['sifre'].'" name="sifre"/>
+          </div>
+          
+          <button class="button button-block" type="submit" name="gncl">Güncelle</button>';
+		  ?>
           </form>
+          <?php
+		  if(isset($_POST["gncl"]))
+		  {
+		  $baglanti7 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	
+ $komut7 = $baglanti7->query("update uyeler set ,ad=".$_POST["ad"].",soyad=".$_POST["soyad"].",cinsiyet=".$_POST["cinsiyet"].",dYeri=".$_POST["dYeri"].",dTarihi=".$_POST["dTarih"].",babaad=".$_POST["bAd"].",annead=".$_POST["aAd"].",eposta=".$_POST["email"].",sifre=".$_POST["sifre"]." where tc=".$_POST["tcno"]."",PDO::FETCH_ASSOC);
+	  $sorgu7 = $komut7->fetch(PDO::FETCH_ASSOC);
+		  execute($sorgu7);
+		  }
+		   ?>
 
         </div>
         
