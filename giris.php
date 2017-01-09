@@ -217,28 +217,86 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
           </form>
                </div>
                <div id="login3">   
-          <h1>Hoşgeldiniz</h1>
+          <h1>Üye Bilgilerini Güncelle</h1>
           
-          <form action="/" method="post">
+          <form method="post">
+          <?php $baglanti2 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	   
+	  $komut = $baglanti2->query("(Select * from uyeler  where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
+	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
+
+		  print_r($sorgu1);
+         echo ' <div class="field-wrap">
+              
+              <input type="text" required autocomplete="off" maxlength="11" value="'.$sorgu1['0']['tc'].'" name="tcno" />
+            </div>
           
+          <div class="top-row">
             <div class="field-wrap">
-            <label>
-              Email Adresi<span class="req">*</span>
-            </label>
-            <input type="email"required autocomplete="off"/>
+              
+              <input type="text" required autocomplete="off" value="'.$sorgu1['0']['ad'].'" name="ad" />
+            </div>
+        
+            <div class="field-wrap">
+           
+              <input type="text"required autocomplete="off" value="'.$sorgu1['0']['soyad'].'" name="soyad" />
+            </div>
+          </div>
+  <div class="top-row">
+          <div class="field-wrap">
+          
+            <input type="text"required autocomplete="off" value="'.$sorgu1['0']['cinsiyet'].'" name="cinsiyet"/>
           </div>
           
           <div class="field-wrap">
-            <label>
-              Şifre<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off"/>
+            
+           <input type="text" required autocomplete="off" value="'.$sorgu1['0']['dYeri'].'" name="dYeri"/>
+          </div>
+    </div>
+      <div class="top-row">
+          <div class="field-wrap">
+           
+            
+             <input type="date"required autocomplete="off" value="value="'.$sorgu1['0']['dTarihi'].'"" name="dTarih"/>
           </div>
           
-          <p class="forgot"><a href="#">İşlemler 3</a></p>
+          <div class="field-wrap">
+            
+            <input type="text"required autocomplete="off" value="'.$sorgu1['0']['annead'].'" name="aAd"/>
+          </div>
           
-          <button class="button button-block"/>Giriş</button>
+             
+    </div>
+    <div class="top-row">
+          <div class="field-wrap">
+          
+            
+             <input type="text"required autocomplete="off" value="'.$sorgu1['0']['babaad'].'" name="bAd"/>
+          </div>
+          
+          <div class="field-wrap">
+           
+            <input type="email"required autocomplete="off" value="'.$sorgu1['0']['eposta'].'" name="email"/>
+          </div>
+    </div>
+       <div class="field-wrap">
+            
+            <input type="text autocomplete="off" value="'.$sorgu1['0']['sifre'].'" name="sifre"/>
+          </div>
+          
+          <button class="button button-block" type="submit" name="gncl">Güncelle</button>';
+		  ?>
           </form>
+          <?php
+		  if(isset($_POST["gncl"]))
+		  {
+		  $baglanti7 = new PDO("mysql:dbname=hastane;host=localhost","root","");
+	
+ $komut7 = $baglanti7->query("update uyeler set ,ad=".$_POST["ad"].",soyad=".$_POST["soyad"].",cinsiyet=".$_POST["cinsiyet"].",dYeri=".$_POST["dYeri"].",dTarihi=".$_POST["dTarih"].",babaad=".$_POST["bAd"].",annead=".$_POST["aAd"].",eposta=".$_POST["email"].",sifre=".$_POST["sifre"]." where tc=".$_POST["tcno"]."",PDO::FETCH_ASSOC);
+	  $sorgu7 = $komut7->fetch(PDO::FETCH_ASSOC);
+		  execute($sorgu7);
+		  }
+		   ?>
 
         </div>
         
