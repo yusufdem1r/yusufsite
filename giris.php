@@ -176,7 +176,7 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
   
 	
 	 
-	  echo "<table cellpadding='20px' >";
+	  echo "<table align='center' bordercolor='#1CE8AA' border='1px'  cellspacing='10px' cellpadding='2px' bordercolordark='#00CC33' >";
 	  echo '<tr style="color:white;">
 	  <td><h3>Tc No</h3></td><td><h3>Hastane Ad</h3></td><td><h3>Klinik Ad</h3></td><td><h3>Doktor Ad</h3></td><td><h3>Tarih</h3></td> <td><h3>Saat</h3></td>
 	  </tr>';
@@ -225,7 +225,7 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
 	  $komut = $baglanti2->query("(Select * from uyeler  where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
 	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
 
-		  print_r($sorgu1);
+		  
          echo ' <div class="field-wrap">
               
               <input type="text" required autocomplete="off" maxlength="11" value="'.$sorgu1['0']['tc'].'" name="tcno" />
@@ -292,9 +292,10 @@ $komut3->execute(array($sorgutc["tc"],$_POST["hAd"],$_POST["kAd"],$_POST["dAd"],
 		  {
 		  $baglanti7 = new PDO("mysql:dbname=hastane;host=localhost","root","");
 	
- $komut7 = $baglanti7->query("update uyeler set ,ad=".$_POST["ad"].",soyad=".$_POST["soyad"].",cinsiyet=".$_POST["cinsiyet"].",dYeri=".$_POST["dYeri"].",dTarihi=".$_POST["dTarih"].",babaad=".$_POST["bAd"].",annead=".$_POST["aAd"].",eposta=".$_POST["email"].",sifre=".$_POST["sifre"]." where tc=".$_POST["tcno"]."",PDO::FETCH_ASSOC);
-	  $sorgu7 = $komut7->fetch(PDO::FETCH_ASSOC);
-		  execute($sorgu7);
+ $komut7 = $baglanti7->prepare("update uyeler set ad=?,soyad=?,cinsiyet=?,dYeri=?,dTarihi=?,babaad=?,annead=?,eposta=?,sifre=? where tc=?",PDO::FETCH_ASSOC);
+ 
+ $komut7->execute(array($_POST["ad"],$_POST["soyad"],$_POST["cinsiyet"],$_POST["dYeri"],$_POST["dTarih"],$_POST["bAd"],$_POST["aAd"],$_POST["email"],$_POST["sifre"],$_POST["tcno"]));
+	 
 		  }
 		   ?>
 

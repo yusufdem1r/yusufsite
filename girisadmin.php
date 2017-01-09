@@ -200,7 +200,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
               Şifre
             </label>
           </div>
-          <button type="submit" class="button button-block" name="kaydol"/>ÜYE OL</button>
+          <button type="submit" class="button button-block" name="kaydol"/>ÜYE EKLE</button>
           
           </form>
           </div>
@@ -275,7 +275,7 @@ $komut3->execute(array($_POST["tcno"],$_POST["ad"],$_POST["soyad"],$_POST["cinsi
 	  $komut = $baglanti2->query("(Select * from uyeler  where  tc=(Select tc from giris  order by id desc LIMIT 1)) ",PDO::FETCH_ASSOC);
 	  $sorgu1 = $komut->fetchALL(PDO::FETCH_ASSOC);
 
-		  print_r($sorgu1);
+		 
          echo ' <div class="field-wrap">
               
               <input type="text" required autocomplete="off" maxlength="11" value="'.$sorgu1['0']['tc'].'" name="tcno" />
